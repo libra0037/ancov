@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body{
+	background:linear-gradient(320deg,#93d6f2 0,#ebb1e4 64%%,rgba(255,162,175,.9));
+	display:flex;
+	flex-direction:column;
+	height:100vh;
+	margin:0;
+	justify-content:center;
+}
+container{
+	width:360px;
+	height:450px;
+	align-items:center;
+	justify-content:center;
+	display:flex;
+	flex-direction:column;
+	background-color:rgba(0,0,0,.4);
+	border-radius:15px;
+	box-shadow:inset 0 -.1em .1em hsla(0,0%%,100%%,.1),0 0 0 1px hsla(0,0%%,100%%,.3),.3em .2em 1em rgba(0,0,0,.3);
+	margin:0 auto;
+	padding:1rem 1.5rem 3rem;
+}
+.ib{
+	border:solid white thin;
+	border-radius:5px;
+	width:320px;
+	height:32px;
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+}
+input{
+	background:none;
+	color:white;
+	border:none;
+	outline:none;
+	width:100%%;
+	height:100%%;
+	padding:0 8px;
+}
+input::-webkit-input-placeholder{
+	color:hsla(0,0%%,100%%,.5);
+}
+input::-moz-input-placeholder{
+	color:hsla(0,0%%,100%%,.5);
+}
+input::-ms-input-placeholder{
+	color:hsla(0,0%%,100%%,.5);
+}
+button{
+	background:none;
+	color:white;
+	border:none;
+	height:100%%;
+	border-radius:5px;
+	padding:0 8px;
+}
+button:hover{
+	background-color:rgba(0,0,0,.2);
+}
+</style>
+<script>
+var t=0,e=["--token","%s"];
+function init(){
+	window.history.replaceState(null,null,window.location.href);
+	var c=document.getElementById("sh");
+	var r=Math.min(document.body.clientWidth*.8/c.clientWidth,document.body.clientHeight*.6/c.clientHeight);
+	c.style.transform='scale('+r+')';
+	setInterval(timer,1000);
+}
+function timer(){
+	var b=document.getElementById("st");
+	var v=Math.floor((t-(new Date()).getTime())/1000);
+	if(v>0)b.innerHTML=v+'s';
+	else b.innerHTML="Send";
+}
+function upd(i){
+	document.getElementById("msg").innerHTML="&nbsp;";
+	document.getElementById("exe").value=e[i];
+}
+function token(){
+	var d=(new Date()).getTime();
+	if(d<t)return;
+	t=d+60000;
+	document.getElementById("st").innerHTML="60s";
+	upd(0);
+	document.getElementById("form").submit();
+}
+</script>
+<meta charset="utf-8">
+<title>&#x767B;&#x5F55;</title>
+</head>
+<body onload="init()">
+<container id="sh">
+<h1 style="padding-top:30px;padding-bottom:80px;color:white;">&#x767B;&#x5F55;</h1>
+<form id="form" action="join" method="post">
+<input type="hidden" id="exe" name="e">
+<div class="ib"><input type="text" name="i" placeholder="&#x5B66;&#x53F7;" autocomplete="off" value="%s"></div><br>
+<div class="ib"><input type="text" name="s" placeholder="&#x77ED;&#x4FE1;&#x9A8C;&#x8BC1;&#x7801;" autocomplete="off"><button type="button" id="st" onclick="token()">Send</button></div><br>
+<div class="ib"><input type="text" name="c" placeholder="&#x56FE;&#x5F62;&#x9A8C;&#x8BC1;&#x7801;" autocomplete="off"><img src="captcha?captchaId=%s" onclick="this.src+='#'" style="height:100%%;margin-right:8px;"></div>
+<font id="msg" color=white>%s&nbsp;</font>
+<div class="ib" style="margin-top:30px;"><button type="submit" onclick="upd(1)" style="width:100%%;">Join</button></div>
+</form>
+</container>
+</body>
+</html>

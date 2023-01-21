@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body{
+	background:linear-gradient(320deg,#93d6f2 0,#ebb1e4 64%%,rgba(255,162,175,.9));
+	display:flex;
+	flex-direction:column;
+	height:100vh;
+	margin:0;
+	justify-content:space-between;
+	align-items:center;
+}
+container{
+	width:360px;
+	height:240px;
+	align-items:center;
+	justify-content:center;
+	display:flex;
+	flex-direction:column;
+	background-color:rgba(0,0,0,.4);
+	border-radius:15px;
+	box-shadow:inset 0 -.1em .1em hsla(0,0%%,100%%,.1),0 0 0 1px hsla(0,0%%,100%%,.3),.3em .2em 1em rgba(0,0,0,.3);
+	margin:0 auto;
+	padding:1rem 1.5rem 1.5rem;
+}
+button{
+	width:96px;
+	height:32px;
+	border:solid white thin;
+	border-radius:5px;
+	background:none;
+	color:white;
+	margin:40px 27px 0 27px;
+}
+button:hover{
+	background-color:rgba(0,0,0,.2);
+}
+</style>
+<script>
+var d=(new Date()).getDay();
+function init(){
+	window.history.replaceState(null,null,window.location.href);
+	var c=document.getElementById("sh");
+	var r=Math.min(document.body.clientWidth*.8/c.clientWidth,document.body.clientHeight*.4/c.clientHeight);
+	c.style.transform='scale('+r+')';
+	setInterval(timer,500);
+}
+function timer(){
+	var n=new Date();
+	var s=Math.floor((%lld000-n.getTime())/1000);
+	if(n.getDay()==d&&s>0){
+		var h=Math.floor(s/3600);s-=h*3600;
+		var m=Math.floor(s/60);s-=m*60;
+		if(h<10)h="0"+h;
+		if(m<10)m="0"+m;
+		if(s<10)s="0"+s;
+		document.getElementById("n").innerHTML=h+":"+m+":"+s;
+	}
+	else location.reload();
+}
+function post(i){
+	if(i&&!confirm("\u505C\u6B62\u81EA\u52A8\u586B\u62A5\u5E76\u9000\u51FA\uFF1F"))return;
+	document.getElementById("m").value=i;
+	document.getElementById("form").submit();
+}
+</script>
+<meta charset="utf-8">
+<title>&#x586B;&#x62A5;&#x65E5;&#x5FD7;</title>
+</head>
+<body onload="init()">
+<br>
+<container id="sh">
+<table style="line-height:28px;color:white;">
+<tr><th>&#x5B66;&#x53F7;&emsp;</th><td>%lld</td></tr>
+<tr><th>&#x72B6;&#x6001;&emsp;</th><td>%s</td></tr>
+<tr><th>&#x4E0A;&#x6B21;&emsp;</th><td>%s (%s)</td></tr>
+<tr><th>&#x4E0B;&#x6B21;&emsp;</th><td><font id="n" color=cornsilk>--:--:--</font> (%s)</td></tr>
+</table>
+<form id="form" action="clockin" method="post">
+<input type="hidden" id="m" name="m">
+<div><button type="button" onclick="post(0)">%s</button><button type="button" onclick="post(1)">Quit</button></div>
+</form>
+</container>
+<font color=white>Source: https://github.com/libra0037/ancov</font>
+</body>
+</html>
